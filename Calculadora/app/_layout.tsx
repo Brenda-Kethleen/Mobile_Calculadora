@@ -7,8 +7,6 @@ import { View, Button } from "react-native";
 export default function RootLayout() {
 
   const [soma, setSoma] = useState(1)
-  const onPress = () =>setSoma(prevSoma => prevSoma)
-
   const [subtracao, setsubtração] = useState(100)
   const [multiplicacao, setmultiplicação] = useState(1)
   const [divisao, setdivisão] = useState(100)
@@ -57,15 +55,15 @@ export default function RootLayout() {
         padding: 5,
         marginVertical: 2,
         borderRadius: 2
-  }}
-  >
-  <Text style={{ 
-    color: "white",
-    flex: 1,
-    justifyContent: 'center',
-    paddingHorizontal: 100
-    }}>+</Text>
-  </TouchableOpacity>
+      }}
+      >
+      <Text style={{ 
+        color: "white",
+        flex: 1,
+        justifyContent: 'center',
+        paddingHorizontal: 100
+        }}>+</Text>
+      </TouchableOpacity>
 
       <TouchableOpacity 
         onPress={subtrair}
@@ -74,46 +72,46 @@ export default function RootLayout() {
         padding: 5,
         marginVertical: 2,
         borderRadius: 2
-  }}
-  >
-  <Text style={{ color: "white" }}>-</Text>
-  </TouchableOpacity>
+      }}
+      >
+      <Text style={{ color: "white" }}>-</Text>
+      </TouchableOpacity>
 
-      <TouchableOpacity 
-        onPress={multiplicar}
-        style={{
-        backgroundColor: "#b4b4adff",
-        padding: 5,
-        marginVertical: 2,
-        borderRadius: 2
-  }}
+          <TouchableOpacity 
+            onPress={multiplicar}
+            style={{
+            backgroundColor: "#b4b4adff",
+            padding: 5,
+            marginVertical: 2,
+            borderRadius: 2
+      }}
   >
-  <Text style={{ color: "white" }}>x</Text>
-  </TouchableOpacity>
+      <Text style={{ color: "white" }}>x</Text>
+      </TouchableOpacity>
 
+          <TouchableOpacity 
+            onPress={dividir}
+            style={{
+            backgroundColor: "#b4b4adff",
+            padding: 5,
+            marginVertical: 2,
+            borderRadius: 2
+      }}
+  >
+      <Text style={{ color: "white" }}>/</Text>
+      </TouchableOpacity>
+      
       <TouchableOpacity 
-        onPress={dividir}
-        style={{
-        backgroundColor: "#b4b4adff",
-        padding: 5,
-        marginVertical: 2,
-        borderRadius: 2
-  }}
-  >
-  <Text style={{ color: "white" }}>/</Text>
-  </TouchableOpacity>
-  
-  <TouchableOpacity 
-        onPress={calcularRaizQuadrada}
-        style={{
-        backgroundColor: "#b4b4adff",
-        padding: 5,
-        marginVertical: 2,
-        borderRadius: 2
-  }}
-  >
-  <Text style={{ color: "white" }}>√</Text>
-  </TouchableOpacity>
+            onPress={calcularRaizQuadrada}
+            style={{
+            backgroundColor: "#b4b4adff",
+            padding: 5,
+            marginVertical: 2,
+            borderRadius: 2
+      }}
+      >
+      <Text style={{ color: "white" }}>√</Text>
+      </TouchableOpacity>
 
       
 

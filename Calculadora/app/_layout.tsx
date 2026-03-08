@@ -5,44 +5,106 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function RootLayout() {
 
-  const linhas = [
-    ["7","8","9","/"],
-    ["4","5","6","x"],
-    ["1","2","3","-"],
-    ["0","√","=","+"]
+  const linhas: string[][] = [
+    ["|x|","AC","%","/"],
+    ["7","8","9","x"],
+    ["4","5","6","-"],
+    ["1","2","3","+"],
+    ["√","0",",","="]
   ]
 
-  const [soma, setSoma] = useState(1)
-  const [subtracao, setsubtração] = useState(100)
-  const [multiplicacao, setmultiplicação] = useState(1)
-  const [divisao, setdivisão] = useState(100)
-  const [raizQuadrada, setRaizQuadrada] = useState(100)
+  const [display, setDisplay] = useState<string>("0")
+  const [valorAnterior, setValorAnterior] = useState<number | null>(null)
+  const [operacao, setOperacao] = useState<string | null>(null)
 
 
-  function somar(){
-    setSoma(soma + 1)
+  function executarOperacao(botao: string){
+
+  if(!isNaN(Number(botao))){
+    adicionarNumero(botao)
+    return
   }
 
-  function subtrair(){
-    setsubtração(subtracao - 1)
+  if(botao === "+" || botao === "-" || botao === "x" || botao === "/"){
+    definirOperacao(botao)
+    return
   }
 
-  function multiplicar(){
-    setmultiplicação(multiplicacao * 2)
+  if(botao === "="){
+    calcularResultado()
+    return
   }
 
-  function dividir(){
-    setdivisão(divisao / 2)
+  if(botao === "AC"){
+    setDisplay("0")
+    setValorAnterior(null)
+    setOperacao(null)
   }
 
-  function calcularRaizQuadrada(){
-    setRaizQuadrada(Math.sqrt(raizQuadrada))
+}
+
+function calcularResultado(){
+
+  if(valorAnterior === null || operacao === null) return
+
+  const atual = Number(display)
+  let resultado = 0
+
+  if(operacao === "+") resultado = valorAnterior + atual
+  if(operacao === "-") resultado = valorAnterior - atual
+  if(operacao === "x") resultado = valorAnterior * atual
+  if(operacao === "/") resultado = valorAnterior / atual
+
+  setDisplay(resultado.toString())
+  setValorAnterior(null)
+  setOperacao(null)
+
+}
+
+function adicionarNumero(numero: string){
+
+  if(display === "0"){
+    setDisplay(numero)
+  } else {
+    setDisplay(display + numero)
   }
+
+}
+
+
+  function definirOperacao(op: string){
+  setValorAnterior(Number(display))
+  setOperacao(op)
+  setDisplay("0")
+}
 
   return (
-    <>
+    
     <SafeAreaView style={{ padding: 20 }}>
-    <Text style={{ fontSize: 30 }}>Calculadora</Text>
+    <Text style={{ 
+      fontSize: 30,
+      fontWeight: "bold",
+      textAlign: "center"
+      }}>Calculadora</Text>
+
+      
+
+    <View
+      style={{
+      backgroundColor: "#e6e6e6",
+      padding:15,
+      marginBottom: 20,
+      borderRadius: 10,
+      width: 315,
+      alignItems: "flex-end",
+      margin: "auto"
+      
+    }}
+>
+  <Text style={{ fontSize: 30 }}>
+    {display}
+  </Text>
+</View>
 
       {linhas.map((linha, indexLinha) => (
 
@@ -50,8 +112,8 @@ export default function RootLayout() {
           key={indexLinha}
           style={{
             flexDirection: "row",
-            justifyContent: "space-between",
-            marginVertical: 5
+            justifyContent: "center",
+            marginVertical: 2
           }}
         >
 
@@ -59,12 +121,14 @@ export default function RootLayout() {
 
             <TouchableOpacity
               key={indexBotao}
+              onPress={() => executarOperacao(botao)}
               style={{
                 backgroundColor: "#b4b4ad",
                 width: 70,
                 padding: 20,
                 borderRadius: 10,
-                alignItems: "center"
+                alignItems: "center",
+                margin: 5
               }}
             >
 
@@ -80,92 +144,8 @@ export default function RootLayout() {
 
       ))}
 
-      <Text>Soma: {soma}</Text>
-      <Text>Subtração: {subtracao}</Text>
-      <Text>Multiplicação: {multiplicacao}</Text>
-      <Text>Divisão: {divisao}</Text>
-      <Text>Raiz Quadrada: {raizQuadrada}</Text>
-
-      
-      <Text>Operações:</Text>
-
-      <TouchableOpacity 
-        onPress={somar}
-        style={{
-        backgroundColor: "#b4b4adff",
-        padding: 5,
-        marginVertical: 2,
-        borderRadius: 2
-      }}
-      >
-      <Text style={{ 
-        color: "white",
-        flex: 1,
-        justifyContent: 'center',
-        paddingHorizontal: 100
-        }}>+</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity 
-        onPress={subtrair}
-        style={{
-        backgroundColor: "#b4b4adff",
-        padding: 5,
-        marginVertical: 2,
-        borderRadius: 2
-      }}
-      >
-      <Text style={{ color: "white" }}>-</Text>
-      </TouchableOpacity>
-
-          <TouchableOpacity 
-            onPress={multiplicar}
-            style={{
-            backgroundColor: "#b4b4adff",
-            padding: 5,
-            marginVertical: 2,
-            borderRadius: 2
-      }}
-  >
-      <Text style={{ color: "white" }}>x</Text>
-      </TouchableOpacity>
-
-          <TouchableOpacity 
-            onPress={dividir}
-            style={{
-            backgroundColor: "#b4b4adff",
-            padding: 5,
-            marginVertical: 2,
-            borderRadius: 2
-      }}
-  >
-      <Text style={{ color: "white" }}>/</Text>
-      </TouchableOpacity>
-      
-      <TouchableOpacity 
-            onPress={calcularRaizQuadrada}
-            style={{
-            backgroundColor: "#b4b4adff",
-            padding: 5,
-            marginVertical: 2,
-            borderRadius: 2
-      }}
-      >
-      <Text style={{ color: "white" }}>√</Text>
-
-      
-      </TouchableOpacity>
-
-      
-      
-
-    
-    
 
     </SafeAreaView>
-    </>
-
-  
-    
+      
   );
 };

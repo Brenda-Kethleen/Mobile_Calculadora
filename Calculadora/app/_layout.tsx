@@ -39,6 +39,63 @@ export default function RootLayout() {
     setDisplay("0")
     setValorAnterior(null)
     setOperacao(null)
+    return
+  }
+
+  if(botao === "|x|"){
+    apagarUltimo()
+    return
+  }
+
+  if(botao === "%"){
+    porcentagem()
+    return
+  }
+
+  if(botao === "√"){
+    raizQuadrada()
+    return
+  }
+
+  if(botao === ","){
+    adicionarVirgula()
+    return
+  }
+
+}
+
+function apagarUltimo(){
+
+  if(display.length === 1){
+    setDisplay("0")
+  }else{
+    setDisplay(display.slice(0, -1))
+  }
+
+}
+
+function porcentagem(){
+
+  const valor = Number(display)
+  const resultado = valor / 100
+
+  setDisplay(resultado.toString())
+
+}
+
+function raizQuadrada(){
+
+  const valor = Number(display)
+  const resultado = Math.sqrt(valor)
+
+  setDisplay(resultado.toString())
+
+}
+
+function adicionarVirgula(){
+
+  if(!display.includes(".")){
+    setDisplay(display + ".")
   }
 
 }
